@@ -9,6 +9,7 @@
 #include <iostream>
 
 #include "Chapter01.h"
+#include "Chapter02.h"
 
 using namespace std;
 
@@ -21,5 +22,11 @@ int main() {
 //	testRotate90();
 //	testZeroAndCols();
 //	testRotation();
+
+//	testRemoveDuplicatesList();
+//	testNthToLast();
+//	testSumList();
+//	testLoopBeginList();
+	testNode();
 	return 0;
 }
