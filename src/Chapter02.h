@@ -17,15 +17,15 @@
 
 using namespace std;
 
-// DATA STRUCTURE
+// LINKED LIST DATA STRUCTURE
 
-class node {
+class linked_list_node {
 public:
 	int value;
-	node* next;
-	node(int v);
-	node(int* v, int n);
-	~node();
+	linked_list_node* next;
+	linked_list_node(int v);
+	linked_list_node(int* v, int n);
+	~linked_list_node();
 	int size();
 	void print();
 
@@ -33,8 +33,8 @@ public:
 	void removeDuplicates();
 	int nthToLast(int n);
 	void removeFromMiddle();
-	node* sumLists(node* n1);
-	node* loopBegin();
+	linked_list_node* sumLists(linked_list_node* n1);
+	linked_list_node* loopBegin();
 };
 
 //TESTS

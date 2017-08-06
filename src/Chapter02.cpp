@@ -10,44 +10,44 @@
 #include <algorithm>
 #include <unordered_set>
 
-node::node(int v) {
+linked_list_node::linked_list_node(int v) {
 	value = v;
 	next = nullptr;
 }
 
-node::node(int* v, int n) {
+linked_list_node::linked_list_node(int* v, int n) {
 	value = v[0];
 	next = nullptr;
-	node* cur = this;
+	linked_list_node* cur = this;
 	for (int i = 1; i < n; ++i) {
-		node* next = new node(v[i]);
+		linked_list_node* next = new linked_list_node(v[i]);
 		cur->next = next;
 		cur = next;
 	}
 }
 
-node::~node() {
+linked_list_node::~linked_list_node() {
 	delete next;
 }
 
-int node:: size() {
+int linked_list_node:: size() {
 	return next == nullptr ? 1 : 1 + next->size();
 }
 
-void node:: print() {
+void linked_list_node:: print() {
 	cout << value << " ";
 	if (next != nullptr)
 		next->print();
 }
 
 //EXERCISE 1
-void node::removeDuplicates() {
-	node* first = this;
+void linked_list_node::removeDuplicates() {
+	linked_list_node* first = this;
 	while (first != nullptr) {
-		node* n = first;
+		linked_list_node* n = first;
 		while (n!= nullptr && n->next != nullptr) {
 			if (first->value == n->next->value) {
-				node* todelete = n->next;
+				linked_list_node* todelete = n->next;
 				n->next = n->next->next;
 				todelete->next = nullptr;
 				delete todelete;
@@ -59,11 +59,11 @@ void node::removeDuplicates() {
 }
 
 //EXERCISE 2
-int node::nthToLast(int n) {
+int linked_list_node::nthToLast(int n) {
 	int lastIndex = size()-1;
 	int index = lastIndex-n;
 	if (index <= lastIndex) {
-		node* cur = this;
+		linked_list_node* cur = this;
 		while (index > 0) {
 			cur = cur->next;
 			index--;
@@ -74,28 +74,28 @@ int node::nthToLast(int n) {
 }
 
 //EXERCISE 3
-void node::removeFromMiddle() {
+void linked_list_node::removeFromMiddle() {
 	value = next->value;
-	node* todelete = next;
+	linked_list_node* todelete = next;
 	next = next->next;
 	todelete->next = nullptr;
 	delete todelete;
 }
 
 //EXERCISE 4
-node* node::sumLists(node* n1) {
-	node* n2 = this;
+linked_list_node* linked_list_node::sumLists(linked_list_node* n1) {
+	linked_list_node* n2 = this;
 	if (n1 == nullptr && n2 == nullptr)
-		return new node(0);
-	node *res = nullptr;
-	node *cur = nullptr;
+		return new linked_list_node(0);
+	linked_list_node *res = nullptr;
+	linked_list_node *cur = nullptr;
 	int digit = 0;
 	while (n1 != nullptr || n2 != nullptr) {
 		if (n1 != nullptr)
 			digit += n1->value;
 		if (n2 != nullptr)
 				digit += n2->value;
-		node *nextNode = new node(digit%10);
+		linked_list_node *nextNode = new linked_list_node(digit%10);
 		digit = digit / 10;
 		if (res == nullptr)
 			res = nextNode;
@@ -114,10 +114,10 @@ node* node::sumLists(node* n1) {
 }
 
 //EXERCISE 5
-node* node::loopBegin() {
-	unordered_set<node*> nodes = unordered_set<node*>();
+linked_list_node* linked_list_node::loopBegin() {
+	unordered_set<linked_list_node*> nodes = unordered_set<linked_list_node*>();
 	nodes.insert(this);
-	node* cur = this->next;
+	linked_list_node* cur = this->next;
 	while (cur != this) {
 		if (nodes.find(cur) != nodes.end())
 			return cur;
@@ -136,7 +136,7 @@ void testChapter02() {
 
 void testRemoveDuplicatesNode() {
 	int values[5] = {1, 2, 1, 4, 2};
-	node* n = new node(values, 5);
+	linked_list_node* n = new linked_list_node(values, 5);
 	n->print(); cout << endl;
 	n->removeDuplicates();
 	n->print(); cout << endl;
@@ -145,17 +145,17 @@ void testRemoveDuplicatesNode() {
 
 void testSumLists() {
 	int values1[3] = {3, 1, 5};
-	node* n1 = new node(values1, 3);
+	linked_list_node* n1 = new linked_list_node(values1, 3);
 	int values2[3] = {5, 9, 2};
-	node* n2 = new node(values2, 3);
-	node* n3 = n1->sumLists(n2);
+	linked_list_node* n2 = new linked_list_node(values2, 3);
+	linked_list_node* n3 = n1->sumLists(n2);
 	n3->print(); cout << endl;
 	delete n1; delete n2; delete n3;
 }
 
 void testLoopBegin() {
 	int values[5] = {1, 2, 1, 4, 2};
-	node* n = new node(values, 5);
+	linked_list_node* n = new linked_list_node(values, 5);
 	n->next->next->next->next->next = n->next->next->next;
 	cout << n->loopBegin()->value << endl;
 	n->next->next->next->next->next = nullptr;
