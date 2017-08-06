@@ -14,19 +14,10 @@
 using namespace std;
 
 int main() {
-//	testHasUniqueCharacters();
-//	testReverseString();
-//	testRemoveDuplicates();
-//	testAnagrams();
-//	testReplaceSpaces();
-//	testRotate90();
-//	testZeroAndCols();
-//	testRotation();
 
-//	testRemoveDuplicatesList();
-//	testNthToLast();
-//	testSumList();
-//	testLoopBeginList();
-	testNode();
+//	testChapter01();
+
+//	testChapter02();
+
 	return 0;
 }
