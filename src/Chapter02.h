@@ -17,20 +17,30 @@
 
 using namespace std;
 
-void removeDuplicatesList(list<int>& l);
-void removeDuplicatesList2(list<int>& l);
-void removeDuplicatesList3(list<int>& l);
-void testRemoveDuplicatesList();
+// DATA STRUCTURE
 
-int nthToLast(list<int>& l, int n);
-void testNthToLast();
+class node {
+public:
+	int value;
+	node* next;
+	node(int v);
+	node(int* v, int n);
+	~node();
+	int size();
+	void print();
 
-list<int> sumLists(list<int>& l1, list<int>& l2);
-void testSumList();
+	//EXERCISES
+	void removeDuplicates();
+	int nthToLast(int n);
+	void removeFromMiddle();
+	node* sumLists(node* n1);
+	node* loopBegin();
+};
 
-int loopBeginList(list<int>& l);
-void testLoopBeginList();
-
-void testNode();
+//TESTS
+void testChapter02();
+void testRemoveDuplicatesNode();
+void testSumLists();
+void testLoopBegin();
 
 #endif /* CHAPTER02_H_ */
