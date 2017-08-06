@@ -110,7 +110,7 @@ void testAnagrams() {
 
 //EXERCISE 5
 
-bool replaceSpaces(string& s) {
+void replaceSpaces(string& s) {
 	int countSpaces = 0;
 	for (char c : s)
 		countSpaces = c == ' ' ? countSpaces+1 : countSpaces;
@@ -259,4 +259,16 @@ bool isRotation(string s1, string s2) {
 
 void testRotation(){
 	cout << isRotation("asdas", "dasas");
+}
+
+//TESTS
+void testChapter01() {
+		testHasUniqueCharacters();
+		testReverseString();
+		testRemoveDuplicates();
+		testAnagrams();
+		testReplaceSpaces();
+		testRotate90();
+		testZeroAndCols();
+		testRotation();
 }
