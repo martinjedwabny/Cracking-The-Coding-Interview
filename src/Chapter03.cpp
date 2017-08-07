@@ -220,6 +220,7 @@ three_stack_array::three_stack_array(int n) {
 
 three_stack_array::~three_stack_array() {
 	delete array;
+	delete size;
 }
 
 bool three_stack_array::push(int v, int stack) {
@@ -325,12 +326,10 @@ void set_of_plates::popAt(int index) {
 				vector<int> copy = vector<int>(threshold-1);
 				for (int j = 0; j < threshold - 1; j++) {
 					copy[j] = cur->top();
-//					cout << j << " " << copy[j] << endl;
 					cur->pop();
 				}
 				cur->push(next->top());
 				for (int j = threshold-2; j >= 0; j--) {
-//					cout << j << " " << copy[j] << endl;
 					cur->push(copy[j]);
 				}
 				next->pop();
