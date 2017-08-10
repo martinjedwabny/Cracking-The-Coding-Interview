@@ -6,11 +6,16 @@
  */
 
 #include "Chapter04.h"
+#include <stack>
+#include <unordered_map>
 
 void testChapter04() {
 //	test_basic();
 //	test_balanced();
-	test_is_there_route();
+//	test_is_there_route();
+//	test_min_height_tree();
+//	test_group_by_depth();
+	test_next_tree_node();
 }
 
 void test_basic() {
@@ -54,6 +59,36 @@ void test_is_there_route() {
 	cout << is_there_route(adj, 0, 3) << "\n";
 	cout << is_there_route(adj, 4, 5) << "\n";
 	cout << is_there_route(adj, 0, 5) << "\n";
+}
+
+void test_min_height_tree() {
+	int array[5] = {1,2,3,4,5};
+	Tree<int>* t = create_minimum_height_tree(array, 5);
+	t->print_inorder(); cout << "\n";
+	delete t;
+}
+
+void test_group_by_depth() {
+	int array[5] = {1,2,3,4,5};
+	Tree<int>* t = create_minimum_height_tree(array, 5);
+	vector<list <Tree<int>* > > vlt = group_by_depth(t);
+	int depth = 0;
+	for (auto l : vlt) {
+		cout << "depth " << depth <<": ";
+		for (auto t : l)
+			cout << t->value << " ";
+		depth++;
+		cout << "\n";
+	}
+	delete t;
+}
+
+void test_next_tree_node() {
+	int array[5] = {1,2,3,4,5};
+	Tree<int>* t = create_minimum_height_tree(array, 5);
+	Tree<int>* succ = next_tree_node(t, t->right);
+	cout << succ->value << "\n";
+	delete t;
 }
 
 //TREE DATA STRUCTURE
@@ -173,4 +208,61 @@ bool is_there_route(vector< list<int> >& adjacency_list, int i, int j) {
 	vector<bool> visited = vector<bool>(n, false);
 	visited[i] = true;
 	return aux_is_there_route(adjacency_list, i, j, n, visited);
+}
+
+//EXERCISE 3
+
+Tree<int>* create_minimum_height_tree(int* array, int n) {
+	Tree<int>* res = new Tree<int>(array[0]);
+	int h = n / 2;
+	if (h > 0)
+		res->left = create_minimum_height_tree(array+1, h);
+	if (n-h-1 > 0)
+		res->right = create_minimum_height_tree(array+h+1, n-h-1);
+	return res;
+}
+
+//EXERCISE 4
+
+vector< list< Tree<int>* > >group_by_depth(Tree<int>* t) {
+	vector< list< Tree<int>* > > res = vector< list< Tree<int>* > >(max_depth(*t));
+	res.push_back(list< Tree<int>* >());
+	res[0].push_back(t);
+	int depth = 1;
+	while ((int)(res[depth-1].size()) > 0) {
+		for (Tree<int>* t : res[depth-1]) {
+			if (t->left != nullptr)
+				res[depth].push_back(t->left);
+			if (t->right != nullptr)
+				res[depth].push_back(t->right);
+		}
+		depth++;
+	}
+	return res;
+}
+
+//EXERCISE 5
+
+bool is_leaf(Tree<int> node) {
+	return node.left != nullptr || node.right != nullptr;
+}
+
+Tree<int>* next_tree_node(Tree<int>* root, Tree<int>* node) {
+	stack< Tree<int>* > dfs = stack< Tree<int>* >();
+	unordered_map< Tree<int>*, int > visited = unordered_map< Tree<int>*, int >();
+	dfs.push(root);
+	bool found = false;
+	while ((int)dfs.size() > 0) {
+		Tree<int>* current = dfs.top(); dfs.pop();
+		if (found && visited[current] == 0)
+			return current;
+		visited[current] = 1;
+		if (current == node)
+			found = true;
+		if (current->right != nullptr && visited[current->right] == 0)
+			dfs.push(current->right);
+		if (current->left != nullptr && visited[current->left] == 0)
+			dfs.push(current->left);
+	}
+	return nullptr;
 }
